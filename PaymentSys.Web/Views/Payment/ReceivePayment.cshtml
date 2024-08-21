@@ -1,0 +1,11 @@
+﻿@using PaymentSys.Web.Models.Dtos
+@model PaymentDto
+
+@(Html.BeginForm(null)){
+    <input asp-for="Name" placeholder="name" />
+    <input asp-for="Id" placeholder="id" />
+    <input asp-for="OrderDto.Address" placeholder="Order address" />
+    <input asp-for="OrderDto.Name" placeholder="Order name" />
+    <input asp-for="OrderDto.Id" placeholder="Order id" />
+    <input type="submit">
+}

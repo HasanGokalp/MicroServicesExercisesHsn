@@ -2,6 +2,8 @@
 using PaymentSys.Web.Models.Dtos;
 using System.Text.Json;
 using System.Text;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PaymentSys.Web.Controllers
 {
@@ -16,13 +18,17 @@ namespace PaymentSys.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> ReceivePayment(PaymentDto paymentDto)
         {
-            var client = new HttpClient();
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback =
+                (HttpRequestMessage httpRequestMessage, X509Certificate2 cert, X509Chain cetChain, SslPolicyErrors sslPolicyErrors) => true;
+
+            using var client = new HttpClient(handler);
             // Nesneyi JSON formatına çeviriyoruz
             var json = JsonSerializer.Serialize(paymentDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             // POST isteğini gönderiyoruz
-            var response = await client.PostAsync("http://localhost:5000/services/Payment/Receivepayment", content);
+            var response = await client.PostAsync("https://localhost:5000/services/payment/Payment/Receivepayment", content);
             return View();
         }
     }

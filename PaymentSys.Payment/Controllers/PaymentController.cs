@@ -16,7 +16,7 @@ namespace PaymentSys.Payment.Controllers
             _sendEndpointProvider = sendEndpointProvider;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllPayment")]
         public IActionResult GetAllPayment()
         {
             return Ok("Not Implemented");
